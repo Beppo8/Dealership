@@ -1,0 +1,27 @@
+<h1>Listing Cars</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for car <- @cars do %>
+    <tr>
+      <td>
+        <%= "#{car.car_Year} #{car.car_Make} #{car.car_Model}"%>
+      </td>
+
+      <td>
+        <span><%= link "Show", to: Routes.car_path(@conn, :show, car) %></span>
+        <span><%= link "Edit", to: Routes.car_path(@conn, :edit, car) %></span>
+        <span><%= link "Delete", to: Routes.car_path(@conn, :delete, car), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Car", to: Routes.car_path(@conn, :new) %></span>
