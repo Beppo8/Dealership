@@ -1,6 +1,40 @@
 defmodule Dealership.Listings.Car do
   use Ecto.Schema
   import Ecto.Query, only: [from: 2]
+  import Ecto.Changeset
+  alias Dealership.Listings.Car
+
+  @allowed_attrs [:car_Stock,
+                  :car_VIN,
+                  :car_Year,
+                  :car_Make,
+                  :car_Model,
+                  :car_Body,
+                  :car_Trim,
+                  :car_Doors,
+                  :car_ExteriorColor,
+                  :car_InteriorColor,
+                  :car_EngineCylinders,
+                  :car_EngineDisplacement,
+                  :car_Transmission,
+                  :car_Miles,
+                  :car_SellingPrice,
+                  :car_Certified,
+                  :car_Description,
+                  :car_Options,
+                  :car_Engine_Description,
+                  :car_Transmission_Speed,
+                  :car_Transmission_Description,
+                  :car_Drivetrain,
+                  :car_Fuel_Type,
+                  :car_CityMPG,
+                  :car_HighwayMPG,
+                  :car_PassengerCapacity,
+                  :car_isFeatured,
+                  :car_isReduced,
+                  :car_isListed,
+                  :car_Carfax_One_Owner,
+                  :image_list]
 
   @primary_key {:car_pk, :id, autogenerate: true}
   schema "cars" do
@@ -37,9 +71,20 @@ defmodule Dealership.Listings.Car do
     field :image_list, :string
   end
 
+  def changeset(%Car{} = car, attrs) do
+    car
+    |> cast(attrs, @allowed_attrs)
+    |> validate_required([:car_Year, :car_Make, :car_Model, :car_VIN])
+  end
+
   def for_sale(query) do
     from car in query,
     where: car.car_isListed == "Y"
+  end
+
+  def not_included(query, active_vins) do
+    from car in query,
+    where: not(car.car_VIN in ^active_vins)
   end
 
   defimpl Phoenix.Param, for: Dealership.Listings.Car do
