@@ -1,7 +1,6 @@
 defmodule Dealership.Listings.Car do
   use Ecto.Schema
 
-  @derive {Phoenix.Param, key: :car_pk}
   @primary_key {:car_pk, :id, autogenerate: true}
   schema "cars" do
     field :car_Stock, :string
@@ -35,6 +34,12 @@ defmodule Dealership.Listings.Car do
     field :car_isListed, :string
     field :car_Carfax_One_Owner, :string
     field :image_list, :string
+  end
+
+  defimpl Phoenix.Param, for: Dealership.Listings.Car do
+    def to_param(%{car_pk: id, car_Year: year, car_Make: make, car_Model: model}) do
+      Slugger.slugify_downcase("#{year} #{make} #{model} #{id}")
+    end
   end
 
 end

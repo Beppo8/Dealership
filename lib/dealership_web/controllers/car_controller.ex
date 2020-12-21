@@ -26,8 +26,16 @@ defmodule DealershipWeb.CarController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    car = Listings.get_car!(id)
+  defp id_from_slug(slug) do
+    slug
+    |> String.split("-")
+    |> List.last()
+  end
+
+  def show(conn, %{"id" => slug}) do
+    car = slug
+          |> id_from_slug()
+          |> Listings.get_car!()
     render(conn, "show.html", car: car)
   end
 

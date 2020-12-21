@@ -18,6 +18,7 @@ defmodule DealershipWeb.Router do
 
     get "/", PageController, :index
     resources "/cars", CarController
+    get "/inventory/:id", LegacyRedirect, forward_to: "/cars"
   end
 
   # Other scopes may use custom stacks.
