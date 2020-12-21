@@ -9,6 +9,8 @@ defmodule Dealership.Listings do
   alias Dealership.Listings.Car
 
   def create_or_update_car!(params) do
+    :timer.sleep(2_000)
+
     params
     |> get_car_struct()
     |> Car.changeset(params)

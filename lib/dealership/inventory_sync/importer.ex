@@ -12,8 +12,11 @@ defmodule Dealership.InventorySync.Importer do
     filename
     |> File.stream!()
     |> CSV.decode!(headers: true)
-    |> Stream.map(&Listings.create_or_update_car!/1)
-    |> Enum.to_list()
+    |> Flow.from_enumerable(max_demand: 1, stages: 10)
+    |> Flow.map(&Listings.create_or_update_car!/1)
+    |> Flow.run()
+    #|> Stream.map(&Listings.create_or_update_car!/1)
+    #|> Enum.to_list()
   end
 
   defp deactivate_sold_inventory!(filename) do

@@ -14,9 +14,10 @@ defmodule Dealership.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Dealership.PubSub},
       # Start the Endpoint (http/https)
-      DealershipWeb.Endpoint
+      DealershipWeb.Endpoint,
       # Start a worker by calling: Dealership.Worker.start_link(arg)
       # {Dealership.Worker, arg}
+      #{Dealership.InventorySync.Worker, [[]]},
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
