@@ -1,8 +1,46 @@
-<h1>Show Car</h1>
-
-<ul>
-    <%= "#{@car.car_Year} #{@car.car_Make} #{@car.car_Model}"%>
-</ul>
-
-<span><%= link "Edit", to: Routes.car_path(@conn, :edit, @car) %></span>
-<span><%= link "Back", to: Routes.car_path(@conn, :index) %></span>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>
+      <%=  car_title(@car) %>_
+    </h3>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th></th>
+      <tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Price:
+          </td>
+          <td>
+            <%= format_price(@car.car_SellingPrice) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Mileage:
+          </td>
+          <td>
+            <%= format_price(@car.car_Miles) %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Description:
+          </td>
+          <td>
+            <%= @car.car_Description %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-6">
+  <%= img_tag(@car.image_list, class: "img-thumbnail img-responsive") %>
+  </div>
+</div>
+<span>
+  <%= link "Back", to: Routes.car_path(@conn, :index) %>
+</span>

@@ -4,9 +4,9 @@ defmodule DealershipWeb.CarController do
   alias Dealership.Listings
   alias Dealership.Listings.Car
 
-  def index(conn, _params) do
-    cars = Listings.list_cars()
-    render(conn, "index.html", cars: cars)
+  def index(conn, params) do
+    {cars, kerosene} = Listings.list_cars(params)
+    render(conn, "index.html", cars: cars, kerosene: kerosene)
   end
 
   def new(conn, _params) do

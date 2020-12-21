@@ -17,8 +17,10 @@ defmodule Dealership.Listings do
       [%Car{}, ...]
 
   """
-  def list_cars do
-    Repo.all(Car)
+  def list_cars(params) do
+    Car
+    |> Car.for_sale()
+    |> Repo.paginate(params)
   end
 
   @doc """

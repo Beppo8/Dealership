@@ -1,5 +1,6 @@
 defmodule Dealership.Listings.Car do
   use Ecto.Schema
+  import Ecto.Query, only: [from: 2]
 
   @primary_key {:car_pk, :id, autogenerate: true}
   schema "cars" do
@@ -34,6 +35,11 @@ defmodule Dealership.Listings.Car do
     field :car_isListed, :string
     field :car_Carfax_One_Owner, :string
     field :image_list, :string
+  end
+
+  def for_sale(query) do
+    from car in query,
+    where: car.car_isListed == "Y"
   end
 
   defimpl Phoenix.Param, for: Dealership.Listings.Car do
